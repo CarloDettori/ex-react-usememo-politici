@@ -3,7 +3,7 @@ import { useState, useEffect, memo } from "react"
 
 
 const PoliticiansCard = memo(({ id, name, image, position, biography }) => {
-  console.log("render " + id)
+  //console.log("render " + id)
   return (
     <div>
       <h1>{name}</h1>
@@ -14,11 +14,18 @@ const PoliticiansCard = memo(({ id, name, image, position, biography }) => {
   )
 })
 
+const SelectorOption = memo(({ value }) => {
+  //console.log("render " + id)
+  return <option value={value}>{value}</option>
+})
+
 function App() {
   const url = "https://boolean-spec-frontend.vercel.app/freetestapi/politicians/"
   const [politicians, setPoliticians] = useState([])
   const [filteredPoliticians, setFilteredPoliticians] = useState([]);
+  const [positions, setPositions] = useState([]);
   const [userInput, setUserInput] = useState('');
+
 
   async function getdata(url) {
     const data = await fetch(url)
@@ -47,15 +54,22 @@ function App() {
     getdata(url).then((res) => {
       setPoliticians(res);
       setFilteredPoliticians(res);
-      console.log(res)
+      const positionsDatas = res.map((re) => re.position)
+      const uniquePositions = [...new Set(positionsDatas)];
+      setPositions(uniquePositions)
     })
   }, [])
-  console.log(politicians)
+  //console.log(politicians)
 
   return (
     <main>
       <h1>POLITICI</h1>
       <input type="text" onChange={onCahnge} value={userInput} />
+      <select name="positions" id="positions">
+        {positions.map((position, index) => {
+          return <SelectorOption key={index + 1} value={position} />
+        })}
+      </select>
       {filteredPoliticians.map((politician) => {
         return <PoliticiansCard key={politician.id} id={politician.id} name={politician.name} image={politician.image} position={politician.position} biography={politician.biography} />
       })}
