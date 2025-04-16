@@ -34,8 +34,8 @@ function App() {
     } else {
       const filtered = politicians.filter((politician) => {
         return (
-          politician.name.includes(input) ||
-          politician.biography.includes(input)
+          politician.name.toLowerCase().includes(input.toLowerCase()) ||
+          politician.biography.toLowerCase().includes(input.toLowerCase())
         );
       });
       setFilteredPoliticians(filtered);
