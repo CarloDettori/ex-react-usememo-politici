@@ -3,8 +3,9 @@ import { useState, useEffect, memo } from "react"
 
 
 const PoliticiansCard = memo(({ id, name, image, position, biography }) => {
+  console.log("render " + id)
   return (
-    <div key={id}>
+    <div>
       <h1>{name}</h1>
       <img src={image} alt="" />
       <h2>{position}</h2>
@@ -56,7 +57,7 @@ function App() {
       <h1>POLITICI</h1>
       <input type="text" onChange={onCahnge} value={userInput} />
       {filteredPoliticians.map((politician) => {
-        return <PoliticiansCard name={politician.name} image={politician.image} position={politician.position} biography={politician.biography} />
+        return <PoliticiansCard key={politician.id} id={politician.id} name={politician.name} image={politician.image} position={politician.position} biography={politician.biography} />
       })}
     </main>
   )
