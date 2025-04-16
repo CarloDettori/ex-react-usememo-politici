@@ -65,7 +65,8 @@ function App() {
     <main>
       <h1>POLITICI</h1>
       <input type="text" onChange={onCahnge} value={userInput} />
-      <select name="positions" id="positions">
+      <select onChange={onCahnge} name="positions" id="positions">
+        <option value="">All</option>
         {positions.map((position, index) => {
           return <SelectorOption key={index + 1} value={position} />
         })}
