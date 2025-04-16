@@ -24,6 +24,7 @@ function App() {
   const [politicians, setPoliticians] = useState([])
   const [filteredPoliticians, setFilteredPoliticians] = useState([]);
   const [positions, setPositions] = useState([]);
+  const [selectInput, setSelectInput] = useState([]);
   const [userInput, setUserInput] = useState('');
 
 
@@ -34,20 +35,37 @@ function App() {
   }
 
   function onCahnge(event) {
+    const target = event.target.id
     const input = event.target.value;
-    setUserInput(input);
+    console.log(target)
 
-    if (input === '') {
-      setFilteredPoliticians(politicians);
+    setUserInput(input);
+    setSelectInput(input)
+    if (target == "input") {
+      if (input === '') {
+        setFilteredPoliticians(politicians);
+      } else {
+        const filtered = politicians.filter((politician) => {
+          return (
+            politician.name.toLowerCase().includes(input.toLowerCase()) ||
+            politician.biography.toLowerCase().includes(input.toLowerCase())
+          );
+        });
+        setFilteredPoliticians(filtered);
+      }
     } else {
-      const filtered = politicians.filter((politician) => {
-        return (
-          politician.name.toLowerCase().includes(input.toLowerCase()) ||
-          politician.biography.toLowerCase().includes(input.toLowerCase())
-        );
-      });
-      setFilteredPoliticians(filtered);
+      if (input === '') {
+        setFilteredPoliticians(politicians);
+      } else {
+        const filtered = politicians.filter((politician) => {
+          return (
+            politician.position.includes(input)
+          );
+        });
+        setFilteredPoliticians(filtered);
+      }
     }
+
   }
 
   useEffect(() => {
@@ -64,7 +82,7 @@ function App() {
   return (
     <main>
       <h1>POLITICI</h1>
-      <input type="text" onChange={onCahnge} value={userInput} />
+      <input id="input" type="text" onChange={onCahnge} value={userInput} />
       <select onChange={onCahnge} name="positions" id="positions">
         <option value="">All</option>
         {positions.map((position, index) => {
