@@ -39,21 +39,23 @@ function App() {
     const input = event.target.value;
     console.log(target)
 
-    setUserInput(input);
-    setSelectInput(input)
+
+
     if (target == "input") {
+      setUserInput(input);
       if (input === '') {
         setFilteredPoliticians(politicians);
       } else {
         const filtered = politicians.filter((politician) => {
           return (
-            politician.name.toLowerCase().includes(input.toLowerCase()) ||
-            politician.biography.toLowerCase().includes(input.toLowerCase())
+            (politician.name.toLowerCase().includes(input.toLowerCase()) ||
+              politician.biography.toLowerCase().includes(input.toLowerCase())) && politician.position.toLowerCase().includes(input.toLowerCase())
           );
         });
         setFilteredPoliticians(filtered);
       }
     } else {
+      setSelectInput(input)
       if (input === '') {
         setFilteredPoliticians(politicians);
       } else {
